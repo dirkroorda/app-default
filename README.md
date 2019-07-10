@@ -15,7 +15,7 @@ where `xxx` is your name for the corpus.
 
 Then:
 
-*   adjust the logo in `code/static`;
+*   adjust the logo in `code/static`; copy it to `images` as well
 *   adjust the stuff in `code/config.py`:
     *   the ORG and REPO informationA;
     *   the ports (make them different from all other TF-apps);
@@ -49,7 +49,13 @@ for working with the
 Get started with the
 [tutorial](https://nbviewer.jupyter.org/github/annotation/tutorials/blob/master/{CORPUS}/start.ipynb).
 
-It offers this [API](https://annotation.github.io/text-fabric/Api/App/).
+For the provenance of this corpus, see
+[about](https://github.com/{ORG}/{REPO}/blob/master/docs/about.md).
+
+For a description of the features, see
+[feature documentation](https://github.com/{ORG}/{REPO}/blob/master/docs/transcription.md).
+
+This app offers this [API](https://annotation.github.io/text-fabric/Api/App/).
 
 ![shot](images/shot.png)
 

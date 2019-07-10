@@ -3,24 +3,24 @@ from os.path import dirname, abspath
 PROTOCOL = 'http://'
 HOST = 'localhost'
 PORT = dict(
-    kernel=19500,
-    web=9500,
+    kernel=19600,
+    web=9600,
 )
 
 OPTIONS = ()
 
-ORG = 'annotation'
-REPO = 'banks'
-CORPUS = 'Two quotes from Consider Phlebas by Iain M. Banks'
-VERSION = '0.2'
+ORG = 'yourorg'
+REPO = 'yourrepo'
+CORPUS = 'Corpus name'
+VERSION = '0.1'
 RELATIVE = 'tf'
 
-DOI_TEXT = '10.5281/zenodo.2630416'
-DOI_URL = 'https://doi.org/10.5281/zenodo.2630416'
+DOI_TEXT = '10.5281/zenodo.nnn'
+DOI_URL = 'https://doi.org/10.5281/zenodo.nnn'
 
 DOC_URL = (
-    'https://nbviewer.jupyter.org/github/annotation/banks'
-    '/blob/master/programs/convert.ipynb'
+    f'https://nbviewer.jupyter.org/github/{ORG}/{REPO}'
+    f'/blob/master/docs/transcription.md'
 )
 DOC_INTRO = ''
 CHAR_URL = DOC_URL
@@ -32,7 +32,7 @@ MODULE_SPECS = ()
 
 ZIP = [REPO]
 
-CONDENSE_TYPE = 'line'
+CONDENSE_TYPE = 'paragraph'  # should be the name of section level 3
 
 NONE_VALUES = {None}
 
@@ -42,8 +42,8 @@ EXCLUDED_FEATURES = set()
 
 NO_DESCEND_TYPES = {'lex'}
 
-EXAMPLE_SECTION = '<code># Consider Phlebas</code>'
-EXAMPLE_SECTION_TEXT = '# Consider Phlebas'
+EXAMPLE_SECTION = '<code>book 1:1</code>'
+EXAMPLE_SECTION_TEXT = 'book 1:1'
 
 SECTION_SEP1 = ' '
 SECTION_SEP2 = ':'

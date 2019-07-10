@@ -5,7 +5,8 @@ from tf.applib.highlight import hlText, hlRep
 from tf.applib.api import setupApi
 from tf.applib.links import outLink
 
-SECTION = {'book', 'chapter', 'sentence'}
+SECTION = {'document', 'section', 'paragraph'}  # should be the three section levels
+SLOT = 'word'
 
 
 class TfApp(object):
@@ -17,7 +18,7 @@ class TfApp(object):
     api = app.api
     T = api.T
 
-    (book, chapter, sentence) = T.sectionFromNode(n, fillup=True)
+    (document, section, paragraph) = T.sectionFromNode(n, fillup=True)
     passageText = app.sectionStrFromNode(n)
     href = '#' if _noUrl else app.docUrl
     if text is None:
@@ -77,18 +78,18 @@ class TfApp(object):
 
     rep = ''
     text = ''
-    if nType == 'word':
+    if nType == SLOT:
       text = hlText(app, [n], d.highlights, fmt=d.fmt)
-    elif nType in {'line', 'sentence'}:
-      text = hlText(app, L.d(n, otype='word'), d.highlights, fmt=d.fmt)
+    elif nType in {'paragraph'}:
+      text = hlText(app, L.d(n, otype=SLOT), d.highlights, fmt=d.fmt)
     elif nType in SECTION:
       if secLabel and d.withPassage:
         sep1 = app.sectionSep1
         sep2 = app.sectionSep2
         label = (
             '{}'
-            if nType == 'book' else
-            f'{{}}{sep1}{{}}' if nType == 'chapter' else
+            if nType == 'document' else
+            f'{{}}{sep1}{{}}' if nType == 'section' else
             f'{{}}{sep1}{{}}{sep2}{{}}'
         )
         rep = label.format(*T.sectionFromNode(n))
@@ -98,17 +99,17 @@ class TfApp(object):
           rep = app.webLink(n, text=f'{rep}&nbsp;', _asString=True)
       else:
         rep = ''
-      if nType == 'sentence':
+      if nType == 'paragraph':
         rep += mdhtmlEsc(f'{nType} {F.number.v(n)}') if secLabel else ''
-      elif nType == 'chapter':
+      elif nType == 'section':
         rep += mdhtmlEsc(f'{nType} {F.number.v(n)}') if secLabel else ''
-      elif nType == 'book':
+      elif nType == 'document':
         rep += mdhtmlEsc(f'{nType} {F.title.v(n)}') if secLabel else ''
       rep = hlRep(app, rep, n, d.highlights)
       if text:
         text = hlRep(app, text, n, d.highlights)
     else:
-      rep = hlText(app, L.d(n, otype='word'), d.highlights, fmt=d.fmt)
+      rep = hlText(app, L.d(n, otype=SLOT), d.highlights, fmt=d.fmt)
     if text:
       tClass = display.formatClass[d.fmt].lower()
       text = f'<span class="{tClass}">{text}</span>'
@@ -185,20 +186,18 @@ class TfApp(object):
 
     if bigType:
       children = ()
-    elif nType == 'book':
-      children = L.d(n, otype='chapter')
-    elif nType == 'chapter':
-      children = L.d(n, otype='sentence')
-    elif nType == 'sentence':
-      children = L.d(n, otype='word')
-    elif nType == 'line':
-      children = L.d(n, otype='word')
+    elif nType == 'document':
+      children = L.d(n, otype='section')
+    elif nType == 'section':
+      children = L.d(n, otype='paragraph')
+    elif nType == 'paragraph':
+      children = L.d(n, otype=SLOT)
     else:
-      children = L.d(n, otype='word')
+      children = L.d(n, otype=SLOT)
 
     isText = False
 
-    if nType == 'book':
+    if nType == 'document':
       heading = htmlEsc(F.title.v(n))
       heading += ' '
       heading += getFeatures(
@@ -208,7 +207,7 @@ class TfApp(object):
           plain=True,
           **options,
       )
-    elif nType == 'chapter':
+    elif nType == 'section':
       heading = htmlEsc(F.number.v(n))
       featurePart = getFeatures(
           app,
@@ -216,20 +215,12 @@ class TfApp(object):
           (),
           **options,
       )
-    elif nType == 'sentence':
+    elif nType == 'paragraph':
       heading = htmlEsc(F.number.v(n))
       featurePart = getFeatures(
           app,
           n,
           (),
-          **options,
-      )
-    elif nType == 'line':
-      heading = F.number.v(n)
-      featurePart = getFeatures(
-          app,
-          n,
-          ('terminator',),
           **options,
       )
     elif nType == slotType:
@@ -239,7 +230,7 @@ class TfApp(object):
       featurePart = getFeatures(
           app,
           n,
-          ('gap',),
+          (),
           withName=True,
           **options,
       )
