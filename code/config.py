@@ -1,30 +1,27 @@
 from os.path import dirname, abspath
 
-PROTOCOL = 'http://'
-HOST = 'localhost'
-PORT = dict(
-    kernel=19600,
-    web=9600,
-)
+API_VERSION = 1
 
-OPTIONS = ()
+PROTOCOL = "http://"
+HOST = "localhost"
+PORT = dict(kernel=19600, web=9600)
 
-ORG = 'yourorg'
-REPO = 'yourrepo'
-CORPUS = 'Corpus name'
-VERSION = '0.1'
-RELATIVE = 'tf'
+ORG = "yourorg"
+REPO = "yourrepo"
+CORPUS = "Corpus name"
+VERSION = "0.1"
+RELATIVE = "tf"
 
-DOI_TEXT = '10.5281/zenodo.nnn'
-DOI_URL = 'https://doi.org/10.5281/zenodo.nnn'
+DOI_TEXT = "10.5281/zenodo.nnn"
+DOI_URL = "https://doi.org/10.5281/zenodo.nnn"
 
 DOC_URL = (
-    f'https://nbviewer.jupyter.org/github/{ORG}/{REPO}'
-    f'/blob/master/docs/transcription.md'
+    f"https://nbviewer.jupyter.org/github/{ORG}/{REPO}"
+    f"/blob/master/docs/transcription.md"
 )
-DOC_INTRO = ''
+DOC_INTRO = ""
 CHAR_URL = DOC_URL
-CHAR_TEXT = 'How TF features represent text'
+CHAR_TEXT = "How TF features represent text"
 
 FEATURE_URL = DOC_URL
 
@@ -32,7 +29,8 @@ MODULE_SPECS = ()
 
 ZIP = [REPO]
 
-CONDENSE_TYPE = 'paragraph'  # should be the name of section level 3
+BASE_TYPE = "word"
+CONDENSE_TYPE = "paragraph"  # should be the name of section level 3
 
 NONE_VALUES = {None}
 
@@ -40,37 +38,65 @@ STANDARD_FEATURES = None  # meaning all loadable features
 
 EXCLUDED_FEATURES = set()
 
-NO_DESCEND_TYPES = {'lex'}
+NO_DESCEND_TYPES = {"lex"}
 
-EXAMPLE_SECTION = '<code>book 1:1</code>'
-EXAMPLE_SECTION_TEXT = 'book 1:1'
+EXAMPLE_SECTION = "<code>book 1:1</code>"
+EXAMPLE_SECTION_TEXT = "book 1:1"
 
-SECTION_SEP1 = ' '
-SECTION_SEP2 = ':'
+SECTION_SEP1 = " "
+SECTION_SEP2 = ":"
 
-DEFAULT_CLS = 'txtn'
-DEFAULT_CLS_ORIG = 'txtp'
+WRITING = ""
+WRITING_DIR = "ltr"
 
-FORMAT_CSS = dict(
-    full='txtp',
-    plain='txtp',
-)
-
-CLASS_NAMES = None
-
-FONT_NAME = 'Gentium'
-FONT = 'GentiumPlus-R.ttf'
-FONTW = 'GentiumPlus-R.woff'
+FONT_NAME = "Gentium"
+FONT = "GentiumPlus-R.ttf"
+FONTW = "GentiumPlus-R.woff"
 
 TEXT_FORMATS = {}
 TEXT_FORMATS = {
-    'layout-orig-full': 'layoutRich',
+    "layout-orig-full": "layoutRich",
 }
-
 
 BROWSE_NAV_LEVEL = 2
 BROWSE_CONTENT_PRETTY = False
 
+VERSES = None
+
+LEX = "lex"
+
+TRANSFORM = None
+
+CHILD_TYPE = dict(book="chapter", chapter="sentence", sentence="word", line="word")
+
+SUPER_TYPE = None
+
+PLAIN_TYPES = None
+
+PRETTY_TYPES = dict(
+    book=("{title}", "author", ""),
+    chapter=("{number}", "", ""),
+    sentence=("{number}", "", ""),
+    line=("{number}", "", "terminator"),
+    word=(True, "", "gap"),
+)
+
+LEVELS = dict(
+    book=dict(level=3, flow="col", wrap=False, stretch=False),
+    chapter=dict(level=3, flow="col", wrap=False, strectch=False),
+    sentence=dict(level=2, flow="col", wrap=False, strectch=True),
+    line=dict(level=1, flow="row", wrap=True, strectch=True),
+    word=dict(level=0, flow="col", wrap=False, strectch=False),
+)
+
+INTERFACE_DEFAULTS = dict(
+    withTypes=True,
+    withNodes=False,
+    showFeatures=True,
+    lineNumbers=None,
+    graphics=None,
+)
+
 
 def deliver():
-  return (globals(), dirname(abspath(__file__)))
+    return (globals(), dirname(abspath(__file__)))
