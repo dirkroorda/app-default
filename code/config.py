@@ -71,22 +71,37 @@ CHILD_TYPE = dict(book="chapter", chapter="sentence", sentence="word", line="wor
 
 SUPER_TYPE = None
 
-PLAIN_TYPES = None
-
-PRETTY_TYPES = dict(
-    book=("{title}", "author", ""),
-    chapter=("{number}", "", ""),
-    sentence=("{number}", "", ""),
-    line=("{number}", "", "terminator"),
-    word=(True, "", "gap"),
-)
-
-LEVELS = dict(
-    book=dict(level=3, flow="col", wrap=False, stretch=False),
-    chapter=dict(level=3, flow="col", wrap=False, strectch=False),
-    sentence=dict(level=2, flow="col", wrap=False, strectch=True),
-    line=dict(level=1, flow="row", wrap=True, strectch=True),
-    word=dict(level=0, flow="col", wrap=False, strectch=False),
+TYPE_DISPLAY = dict(
+    book=dict(
+        template="{title}",
+        bareFeatures="author",
+        features="",
+        level=3, flow="col", wrap=False, stretch=False,
+    ),
+    chapter=dict(
+        template="{number}",
+        bareFeatures="",
+        features="",
+        level=3, flow="col", wrap=False, strectch=False,
+    ),
+    sentence=dict(
+        template="{number}",
+        bareFeatures="",
+        features="",
+        level=2, flow="col", wrap=False, strectch=True,
+    ),
+    line=dict(
+        template="{number}",
+        bareFeatures="",
+        features="terminator",
+        level=1, flow="row", wrap=True, strectch=True,
+    ),
+    word=dict(
+        template=True,
+        bareFeatures="",
+        features="gap",
+        level=0, flow="col", wrap=False, strectch=False,
+    ),
 )
 
 INTERFACE_DEFAULTS = dict()
