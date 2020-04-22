@@ -29,77 +29,56 @@ MODULE_SPECS = ()
 
 ZIP = [REPO]
 
-BASE_TYPE = "word"
-CONDENSE_TYPE = "paragraph"  # should be the name of section level 3
-
-NONE_VALUES = {None}
-
-STANDARD_FEATURES = None  # meaning all loadable features
-
-EXCLUDED_FEATURES = set()
-
-NO_DESCEND_TYPES = {"lex"}
-
 EXAMPLE_SECTION = "<code>book 1:1</code>"
 EXAMPLE_SECTION_TEXT = "book 1:1"
 
-SECTION_SEP1 = " "
-SECTION_SEP2 = ":"
-
-WRITING = ""
-WRITING_DIR = "ltr"
-
-FONT_NAME = "Gentium"
-FONT = "GentiumPlus-R.ttf"
-FONTW = "GentiumPlus-R.woff"
-
-TEXT_FORMATS = {}
-TEXT_FORMATS = {
-    "layout-orig-full": "layoutRich",
-}
-
-BROWSE_NAV_LEVEL = 2
-BROWSE_CONTENT_PRETTY = False
-
-VERSE_TYPES = None
-
-LEX = "lex"
-
-TRANSFORM = None
-
-CHILD_TYPE = dict(book="chapter", chapter="sentence", sentence="word", line="word")
-
-SUPER_TYPE = None
+DATA_DISPLAY = dict(
+    noneValues={None},
+    sectionSep1=" ",
+    sectionSep2=":",
+    writing="",
+    writingDir="ltr",
+    fontName="Gentium",
+    font="GentiumPlus-R.ttf",
+    fontw="GentiumPlus-R.woff",
+    textFormats={"layout-orig-full": "layoutRich"},
+    browseNavLevel=2,
+    browseContentPretty=False,
+)
 
 TYPE_DISPLAY = dict(
     book=dict(
         template="{title}",
-        bareFeatures="author",
-        features="",
+        featuresBare="author",
+        children="chapter",
         level=3, flow="col", wrap=False, stretch=False,
     ),
     chapter=dict(
         template="{number}",
-        bareFeatures="",
-        features="",
+        children="sentence",
         level=3, flow="col", wrap=False, strectch=False,
     ),
     sentence=dict(
         template="{number}",
-        bareFeatures="",
-        features="",
+        children="word",
+        condense=True,
         level=2, flow="col", wrap=False, strectch=True,
     ),
     line=dict(
         template="{number}",
-        bareFeatures="",
         features="terminator",
+        children="word",
         level=1, flow="row", wrap=True, strectch=True,
+    ),
+    lex=dict(
+        template="{lexeme}",
+        lexTarget="word",
+        level=0, flow="col", wrap=False, strectch=False,
     ),
     word=dict(
         template=True,
-        bareFeatures="",
         features="gap",
+        base=True,
         level=0, flow="col", wrap=False, strectch=False,
     ),
 )
