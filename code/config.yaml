@@ -97,15 +97,6 @@ docs:
   # will be filled in into `FEATURE_URL` for the variable `{feature}`.
   featurePage: home
 
-  # code for triggering special fonts, e.g.
-  # akk: akkadian
-  # hbo: hebrew
-  # syc: syriac
-  # ara: arabic
-  # grc: greek
-  # cld: neo aramaic
-  writing: ''
-
 # The following options can be passed to plain and pretty
 # They can also be set in the Text-Fabric Browser.
 # The values set here are also the defaults.
@@ -202,7 +193,7 @@ provenanceSpec:
   #
   # If modules have the same org or repo as the main data, these do not have to
   # be specified.
-  moduleSpecs: null
+  moduleSpecs: []
 
   # The GitHub organisation name under which your TF data resides
   org: annotation
@@ -417,3 +408,12 @@ typeDisplay:
   sign:
     features: feat3
     featuresBare: feat1
+
+# code for triggering special fonts, e.g.
+# akk: akkadian
+# hbo: hebrew
+# syc: syriac
+# ara: arabic
+# grc: greek
+# cld: neo aramaic
+writing: ''
