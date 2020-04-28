@@ -175,8 +175,7 @@ provenanceSpec:
   #         docUrl=(
   #             "{nbUrl}/researcher1/work1/blob/master/programs/specialism1.ipynb"
   #         ),
-  #         doiText="xx.yyyy/archive.zzzzzzz",
-  #         doiUrl="https://doi.org/xx.yyyy/archive.zzzzzzz",
+  #         doi="xx.yyyy/archive.zzzzzzz",
   #     ),
   #     dict(
   #         org="researcher2",
@@ -186,8 +185,7 @@ provenanceSpec:
   #         docUrl=(
   #             "{nbUrl}/researcher2/work2/blob/master/programs/specialism2.ipynb"
   #         ),
-  #         doiText="uu.vvvv/archive.wwwwwww",
-  #         doiUrl="https://doi.org/uu.vvvv/archive.wwwwwww",
+  #         doi="uu.vvvv/archive.wwwwwww",
   #     ),
   # )
   #
@@ -294,7 +292,12 @@ typeDisplay:
 
     # plain and pretty: which type of children to be included in the display.
     # The value should be a node type or a set of node types:
-    # children={"piece", "slot"}.
+    #
+    # children: piece
+    #
+    # children:
+    #   - piece
+    #   - slot
     #
     # The default is:
     # for section and structure types: the type that comes immediately below it;
@@ -386,7 +389,7 @@ typeDisplay:
     # other nodes: plain text of the node
     #
     # The default is:
-    # True for the slot type and section and structure types
+    # True for the slot type
     # True for the section and structure types
     # "" for all other types
     template: '{title}'
