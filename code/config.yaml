@@ -88,13 +88,13 @@ docs:
 
   # URL template for feature by feature documentation
   # `{tfDoc}` will be replaced by the root location of the documentation as set above.
-  # The variable part `{feature}` will be replaced by the names of the features.
+  # The variable part `<feature>` will be replaced by the names of the features.
   #
-  # The default is: "{docBase}/features/{feature}{docExt}"
+  # The default is: "{docBase}/features/<feature>{docExt}"
   featureBase: null
 
   # Start page for feature documentation,
-  # will be filled in into `FEATURE_URL` for the variable `{feature}`.
+  # will be filled in into `FEATURE_URL` for the variable `<feature>`.
   featurePage: home
 
 # The following options can be passed to plain and pretty
@@ -173,7 +173,7 @@ provenanceSpec:
   #         relative="tf",
   #         corpus="speicalism1",
   #         docUrl=(
-  #             "{nbUrl}/researcher1/work1/blob/master/programs/specialism1.ipynb"
+  #             "{urlNb}/researcher1/work1/blob/master/programs/specialism1.ipynb"
   #         ),
   #         doi="xx.yyyy/archive.zzzzzzz",
   #     ),
@@ -183,7 +183,7 @@ provenanceSpec:
   #         relative="tf",
   #         corpus="speicalism2",
   #         docUrl=(
-  #             "{nbUrl}/researcher2/work2/blob/master/programs/specialism2.ipynb"
+  #             "{urlNb}/researcher2/work2/blob/master/programs/specialism2.ipynb"
   #         ),
   #         doi="uu.vvvv/archive.wwwwwww",
   #     ),
@@ -191,6 +191,7 @@ provenanceSpec:
   #
   # If modules have the same org or repo as the main data, these do not have to
   # be specified.
+  # If a module has a relative attribute equal to "tf", it can be left out.
   moduleSpecs: []
 
   # The GitHub organisation name under which your TF data resides
@@ -205,7 +206,7 @@ provenanceSpec:
   repo: default
 
   # The version directory with the actual `tf` files that will be used.
-  version: '0.1'
+  version: None
 
   # If present, the base url for an online instantiation of the corpus
   webBase: null
@@ -230,7 +231,7 @@ provenanceSpec:
   # to an online instantation of the node.
   #
   # The following place holders will be honoured:
-  # {base}: the webBase above
+  # {webBase}: the webBase above
   # <1> : value for section heading 1
   # <2> : value for section heading 2
   # <3> : value for section heading 3
@@ -241,8 +242,8 @@ provenanceSpec:
   # to an online instantation of the lexeme node.
   #
   # The following place holders will be honoured:
-  # {base}: the webBase above
-  # {lid} : value for the id of the lexeme
+  # {webBase}: the webBase above
+  # <lid> : value for the id of the lexeme
   # {version} version of the TF resource
   webUrlLex: null
 
@@ -277,6 +278,9 @@ provenanceSpec:
 # NB: zero configuration might already work for your corpus!
 # typeDisplay:{}
 typeDisplay:
+
+  # The name "piece" is a node type of an example dataset.
+  # If you configure your own dataset, use the node types of your dataset instead.
   piece:
 
     # If present and True: this type acts as the base type:
@@ -308,6 +312,13 @@ typeDisplay:
     # Lexeme types do not have children.
     children: slot
 
+    # Some types correspond to long sections. Such big types will not be expanded
+    # in pretty displays. If you also want to generate abrreviated plain displays
+    # you can say childrenPlain: false
+    #
+    # The default is true
+    childrenPlain: true
+
     # If present and true: this type is the default condense type.
     # pretty: when displaying tuples of nodes,
     # they will be chunked in displays of nodes of this type.
@@ -320,11 +331,17 @@ typeDisplay:
 
     # pretty displays: which features to display as name=value
     #
+    # You can also lookup feature values for upper nodes, e.g.
+    # `{lex:gloss}`
+    # which will look for a `lex` node above the current node
+    # and retrieve its `gloss` value.
+    #
     # The default = ""
     features: feat3 feat4
 
     # pretty displays: which features to display by value only
     # (the feature name is not mentioned)
+    # Things like `{lex:gloss}` are allowed.
     #
     # The default = ""
     featuresBare: feat1 feat2
@@ -376,14 +393,23 @@ typeDisplay:
     # (then each child is NOT stretched horizontally)
     # For some types in uruk it is needed to deviate from the default.
     stretch: true
+    
+    # plain and pretty: whether nodes of this type should be wrapped in nodes of another type.
+    # The value indicates the type of the "super" node.
+    # See for example the bhsa, where "phrase_atom" has super type "phrase".
+    #
+    # Nodes that have a super node become hidden in pretty displays,
+    # unless you pass the display option subsuper=True
+    super: null
 
     # node information for plain and pretty displays
+    #
+    # template is for plain displays
+    #
+    # label is for pretty displays
+    #
     # You can have features filled in by mentioning them by name in the template, e.g.
     # `{name1} - {name2}`
-    # You can also lookup feature values for upper nodes, e.g.
-    # `{lex:gloss}`
-    # which will look for a `lex` node above the current node
-    # and retrieve its `gloss` value.
     # If you specify `True`, the node information will be the result of:
     # section and structure types nodes: a heading
     # other nodes: plain text of the node
@@ -392,7 +418,24 @@ typeDisplay:
     # True for the slot type
     # True for the section and structure types
     # "" for all other types
+    label: '{title}'
     template: '{title}'
+
+    # Sometimes you do not want to display straight feature values, but transformed ones.
+    # For each node type and each feature you can specfiy a transform function f:
+    # E.g.
+    # 
+    # case:
+    #   transform:
+    #     type: ctype
+    #
+    # The feature `type`, when computed for a `case` node, will yield a value
+    # which is transformed by a function to a new value. 
+    # In your app code you have to implement:
+    #
+    #   transform_f(app, origValue) => newValue
+    #
+    transform: {}
 
     # whether this type should be formatted as a verse
     #
@@ -408,6 +451,10 @@ typeDisplay:
     # such columns may not be wrapped (into several columns)
     # For some types in uruk it is needed to deviate from the default.
     wrap: true
+
+  # The name "sign" is the slot type of an example dataset.
+  # If you configure your own dataset, use the slot types of your dataset instead.
+  # All parameters work for all types, but some are more meaningful than others.
   sign:
     features: feat3
     featuresBare: feat1
