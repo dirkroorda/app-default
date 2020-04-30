@@ -115,13 +115,23 @@ interfaceDefaults:
   # will cause plain and pretty to display a source line number, which will
   # come from the feature feat.
   #
-  # Some apps
+  # Only apps that define line numbers.
+  # For these apps, the default is false, otherwise the default is null
+  # (the option is not shown)
   lineNumbers: null
 
   # if withTypes is True, you can set prettyTypes=False to prevent
   # showing the types in pretty displays
   # All apps
   prettyTypes: true
+
+  # whether to fully show chunks of chunked types.
+  #
+  # Only apps that define chunked types (by means of chunkOf in typeDisplay settings)
+  # Showing chunks severely clutters the displays, but sometimes you need that information.
+  # For these apps, the default is false, otherwise the default is null
+  # (the option is not shown)
+  showChunks: null
 
   # whether to show features and their values in pretty displays
   # All apps
@@ -131,7 +141,9 @@ interfaceDefaults:
   # Only node types for which graphics=True has been configured in TYPE_DISPLAY
   # will cause plain and pretty to display those graphic elements.
   #
-  # Some apps
+  # Only apps that define graphics.
+  # For these apps, the default is true, otherwise the default is null
+  # (the option is not shown)
   showGraphics: null
 
   # whether to show the node numbers in plain and pretty displays
@@ -394,13 +406,13 @@ typeDisplay:
     # For some types in uruk it is needed to deviate from the default.
     stretch: true
     
-    # plain and pretty: whether nodes of this type should be wrapped in nodes of another type.
-    # The value indicates the type of the "super" node.
-    # See for example the bhsa, where "phrase_atom" has super type "phrase".
+    # plain and pretty: whether nodes of this type are the chunks of another type.
+    # Typically, the other type has gaps, and this type consists of continuous chunks.
+    # See for example the bhsa, where phrase_atoms are chunks of phrases.
     #
-    # Nodes that have a super node become hidden in pretty displays,
-    # unless you pass the display option subsuper=True
-    super: null
+    # Nodes that are chunks have a reduced appearance in pretty displays, 
+    # unless you pass the display option showChunks=True
+    chunkOf: null
 
     # node information for plain and pretty displays
     #
