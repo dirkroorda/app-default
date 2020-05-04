@@ -173,7 +173,7 @@ provenanceSpec:
 
   # If not None, it is the path inside the repo to the directory
   # that holds the graphics files
-  graphics: null
+  graphicsRelative: null
 
   # You can specify modules that should always be loaded with the core data,
   # as many as you want:
