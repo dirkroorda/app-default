@@ -44,11 +44,17 @@ dataDisplay:
 
   # textFormats={"layout-orig-full": "layoutRich"},
   # additional text formats that can use HTML styling.
-  # Keys: names of new text formats.
-  # Values: name of a method that implements that format.
-  # If the name is `xxx`,
-  # then `app.py` should implement a method `fmt_xxx(node)`
-  # to produce html for node `node`
+  # Keys: names of new and old text formats.
+  # Values: 
+  # - method: name of a method that implements that format.
+  # If the name is `xxx`, or n`type#xxx`
+  # then `app.py` should implement a method `fmt_xxx(node, **kwargs)`
+  # to produce html for node `node`. 
+  # This function will passed the outer=True if called by a plain or pretty at
+  # the outer level, and first=True, last=True if the node is on a leftmost resp.
+  # rightmost branch in the tree of children below the outer node.
+  # - style: a keyword indicating in what style the format should be set:
+  # normal, source, trans, phono, orig
   textFormats: {}
 
 # Here follow the parameters for documentation.
@@ -432,6 +438,14 @@ typeDisplay:
     # "" for all other types
     label: '{title}'
     template: '{title}'
+    
+    # styling for plain and pretty displays
+    #
+    # The label or template may be a special style to format it with.
+    # If you pass one of normal, source, trans, phono, orig: 
+    # an appropriate css style will be chosen.
+    # If you pass anything else: that will be an extra css class passed to the output.
+    style: None
 
     # Sometimes you do not want to display straight feature values, but transformed ones.
     # For each node type and each feature you can specfiy a transform function f:
