@@ -131,6 +131,10 @@ interfaceDefaults:
   # All apps
   prettyTypes: true
 
+  # whether to show the features mentioned in the last query in pretty displays
+  # All apps
+  queryFeatures: true
+
   # whether to fully show chunks of chunked types.
   #
   # Only apps that define chunked types (by means of chunkOf in typeDisplay settings)
@@ -139,9 +143,9 @@ interfaceDefaults:
   # (the option is not shown)
   showChunks: null
 
-  # whether to show features and their values in pretty displays
+  # whether to show the standard features and their values in pretty displays
   # All apps
-  showFeatures: true
+  standardFeatures: true
 
   # whether to show additional graphics in plain and pretty displays.
   # Only node types for which graphics=True has been configured in TYPE_DISPLAY
