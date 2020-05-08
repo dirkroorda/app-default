@@ -42,6 +42,9 @@ dataDisplay:
   # e.g. the `:` in `Genesis 1:1`
   sectionSep2: ':'
 
+  # show the text of verselike nodes in tables and tuples (in plainTuple() and table())
+  showVerseInTuple: false
+  
   # textFormats={"layout-orig-full": "layoutRich"},
   # additional text formats that can use HTML styling.
   # Keys: names of new and old text formats.
