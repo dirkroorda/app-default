@@ -373,13 +373,13 @@ typeDisplay:
 
     # pretty: whether the container should arrange its subdisplays
     # as a column or as a row.
-    # Values: row, col
+    # Values: hor, ver
     # The default is:
-    # col if level is 3 (typically section types), except for the verselike types
-    # col if level is 0 (typically slot types and lexeme types)
-    # row if level is 1 or 2 (typically linguistic types at sentence level) and
+    # ver if level is 3 (typically section types), except for the verselike types
+    # ver if level is 0 (typically slot types and lexeme types)
+    # hor if level is 1 or 2 (typically linguistic types at sentence level) and
     # for the verselike types
-    flow: row
+    flow: hor
 
     # If present and True, then there is additional graphics available for nodes of this
     # type.
