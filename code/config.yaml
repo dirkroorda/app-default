@@ -82,7 +82,7 @@ docs:
   #
   # If it is left out, it will point to the transcription table in the TF docs
   # that corresponds with the writing setting.
-  charUrl: '{tfDoc}/Writing/Transcription/'
+  charUrl: '{tfDoc}/writing/transcription/'
 
   # Base url page for the corpus documentation
   docBase: '{docRoot}/{org}/{repo}/blob/master/docs'
