@@ -1,503 +1,73 @@
-# To let Text-Fabric check whether its version matches the version of the TF-app
-apiVersion: 1
-
-
-# Here follow generic display parameters, none of which have to be filled in.
-# Do not specify values if the defaults work for you.
-# The values set here are also the defaults.
-#
-# NB: zero configuration might already work for your corpus!
-# dataDisplay: {}
+apiVersion: 2
 dataDisplay:
-
-  # whether the content is shown as a list of subsectional items
-  # contained in the selected item
-  # or as a pretty display of the item itself
   browseContentPretty: false
-
-  # the section level up to which the browser shows a hierarchical tree.
-  # Either 1 or 2
-  #
-  # The default is one less than the number of section types
   browseNavLevel: 2
-
-  # Placeholder text for passage entry fields in the TF browser.
   exampleSection: piece 1
-
-  # Formatted placeholder text for passage entry fields in the TF browser.
   exampleSectionHtml: <code>piece 1</code>
-
-  # features that are present in the data source but will not be loaded for the TF browser
   excludedFeatures: []
-
-  # feature values that are deemed uninformative, e.g. `None`, `'NA'`
   noneValues:
   - null
-
-  # separator between main and secondary sections in a passage reference;
-  # e.g. the space in `Genesis 1:1`
   sectionSep1: ' '
-
-  # separator between secondary and tertiary sections in a passage reference;
-  # e.g. the `:` in `Genesis 1:1`
   sectionSep2: ':'
-
-  # show the text of verselike nodes in tables and tuples (in plainTuple() and table())
   showVerseInTuple: false
-  
-  # textFormats={"layout-orig-full": "layoutRich"},
-  # additional text formats that can use HTML styling.
-  # Keys: names of new and old text formats.
-  # Values: 
-  # - method: name of a method that implements that format.
-  # If the name is `xxx`, or n`type#xxx`
-  # then `app.py` should implement a method `fmt_xxx(node, **kwargs)`
-  # to produce html for node `node`. 
-  # This function will passed the outer=True if called by a plain or pretty at
-  # the outer level, level=recursion depth, and first=True, last=True
-  # if the node is on a leftmost resp.
-  # rightmost branch in the tree of children below the outer node.
-  # - style: a keyword indicating in what style the format should be set:
-  # normal, source, trans, phono, orig
   textFormats: {}
-
-# Here follow the parameters for documentation.
-# Do not specify values if the defaults work for you.
-# The values set here are also the defaults.
-#
-# In the settings below you may refer to provenance settings, like {org} and {repo}
-# You may refer to nbviewer with {urlNb} and to github with {urlGh}
-#
-# NB: zero configuration might already work for your corpus!
-# docs : {}
 docs:
-
-  # Hint text when a user hovers over the `CHAR_URL` link
   charText: How TF features represent text
-
-  # Start page for character coding documentation.
-  # TF supports several writing systems with character- and transcription tables.
-  # Replace `Transcription` by the writing system relevant for your data.
-  # `{tfDoc}` will be replaced by the root location of the online TF documentation.
-  #
-  # If it is left out, it will point to the transcription table in the TF docs
-  # that corresponds with the writing setting.
   charUrl: '{tfDoc}/writing/transcription/'
-
-  # Base url page for the corpus documentation
   docBase: '{docRoot}/{org}/{repo}/blob/master/docs'
-
-  # The extension of documentation pages
   docExt: .md
-
-  # Landing page for the corpus documentation
   docPage: home
-
-  # Where the docs are: on Github (default), or on nbviewer ("{urlNb}") or somewhere else.
   docRoot: '{urlGh}'
-
-  # URL template for feature by feature documentation
-  # `{tfDoc}` will be replaced by the root location of the documentation as set above.
-  # The variable part `<feature>` will be replaced by the names of the features.
-  #
-  # The default is: "{docBase}/features/<feature>{docExt}"
   featureBase: null
-
-  # Start page for feature documentation,
-  # will be filled in into `FEATURE_URL` for the variable `<feature>`.
   featurePage: home
-
-# The following options can be passed to plain and pretty
-# They can also be set in the Text-Fabric Browser.
-# The values set here are also the defaults.
-# Do not specify values if the defaults work for you.
-# Here their app-dependent defaults can be specified.
-# Not all options work for all corpora.
-#
-# NB: zero configuration might already work for your corpus!
-# interfaceDefaults = dict()
 interfaceDefaults:
-  # whether to show the line numbers in plain and pretty displays.
-  # The line numbers come from the source files from which the TF dataset
-  # has been generated.
-  #
-  # Those types for which lineNumber="feat" has been configured in TYPE_DISPLAY
-  # will cause plain and pretty to display a source line number, which will
-  # come from the feature feat.
-  #
-  # Only apps that define line numbers.
-  # For these apps, the default is false, otherwise the default is null
-  # (the option is not shown)
   lineNumbers: null
-
-  # if withTypes is True, you can set prettyTypes=False to prevent
-  # showing the types in pretty displays
-  # All apps
   prettyTypes: true
-
-  # whether to show the features mentioned in the last query in pretty displays
-  # All apps
   queryFeatures: true
-
-  # whether to fully show chunks of chunked types.
-  #
-  # Only apps that define chunked types (by means of chunkOf in typeDisplay settings)
-  # Showing chunks severely clutters the displays, but sometimes you need that information.
-  # For these apps, the default is false, otherwise the default is null
-  # (the option is not shown)
-  showChunks: null
-
-  # whether to show the standard features and their values in pretty displays
-  # All apps
+  showHidden: null
   standardFeatures: true
-
-  # whether to show additional graphics in plain and pretty displays.
-  # Only node types for which graphics=True has been configured in TYPE_DISPLAY
-  # will cause plain and pretty to display those graphic elements.
-  #
-  # Only apps that define graphics.
-  # For these apps, the default is true, otherwise the default is null
-  # (the option is not shown)
   showGraphics: null
-
-  # whether to show the node numbers in plain and pretty displays
-  # All apps
   withNodes: false
-
-  # whether to show the node type in plain and pretty displays
-  # All apps
   withTypes: false
-
-# Here follow the provenance parameters,
-# which are used to fetch data and to report provenance in data exports.
-# Do not specify values if the defaults work for you.
-# The values set here are also the defaults.
-#
-# NB: zero configuration might already work for your corpus!
-# provenanceSpec: {}
 provenanceSpec:
-
-  # A user-friendly name for your corpus
   corpus: TF dataset (unspecified)
-
-  # If your data is archived: the doi of the archived version, like
-  # "xx.yyyy/archive.zzzzzzz"
-  # without the https://doi.org/ in front.
   doi: null
-
-  # If not None, it is the path inside the repo to the directory
-  # that holds the graphics files
   graphicsRelative: null
-
-  # You can specify modules that should always be loaded with the core data,
-  # as many as you want:
-  #
-  # moduleSpecs = (
-  #     dict(
-  #         org="researcher1",
-  #         repo="work1",
-  #         relative="tf",
-  #         corpus="speicalism1",
-  #         docUrl=(
-  #             "{urlNb}/researcher1/work1/blob/master/programs/specialism1.ipynb"
-  #         ),
-  #         doi="xx.yyyy/archive.zzzzzzz",
-  #     ),
-  #     dict(
-  #         org="researcher2",
-  #         repo="work2",
-  #         relative="tf",
-  #         corpus="speicalism2",
-  #         docUrl=(
-  #             "{urlNb}/researcher2/work2/blob/master/programs/specialism2.ipynb"
-  #         ),
-  #         doi="uu.vvvv/archive.wwwwwww",
-  #     ),
-  # )
-  #
-  # If modules have the same org or repo as the main data, these do not have to
-  # be specified.
-  # If a module has a relative attribute equal to "tf", it can be left out.
   moduleSpecs: []
-
-  # The GitHub organisation name under which your TF data resides
   org: annotation
-
-  # The path inside the repo to the directory
-  # that holds the version directories of the tf data.
   relative: tf
-
-  # The GitHub repo name under which your TF data resides
-  # N.B. org/repo = annotation/default acts as placeholder for app-less datasets
   repo: default
-
-  # The version directory with the actual `tf` files that will be used.
   version: None
-
-  # If present, the base url for an online instantiation of the corpus
   webBase: null
-
-  # If passed, will be used as hint text when the user hovers over a web link
   webHint: null
-
-  # If passed, the language in which section headings must be generated in web links
   webLang: null
-
-  # If present, it is either:
-  # the name of a feature that contains the lexeme id for lexeme nodes.
-  #
-  # or True and then the app should implement app.getLexId(n) that computes lexeme ids
-  # for lexeme nodes.
-  #
-  # The lexeme id is the one used in the online instantiation of the corpus
-  # to point to lexemes.
   webLexId: null
-
-  # If present, webLink(node) will use this as a template to generate a url
-  # to an online instantation of the node.
-  #
-  # The following place holders will be honoured:
-  # {webBase}: the webBase above
-  # <1> : value for section heading 1
-  # <2> : value for section heading 2
-  # <3> : value for section heading 3
-  # {version}: version of the TF resource
   webUrl: null
-
-  # If passed, webLink(node) will use this as a template to generate a url
-  # to an online instantation of the lexeme node.
-  #
-  # The following place holders will be honoured:
-  # {webBase}: the webBase above
-  # <lid> : value for the id of the lexeme
-  # {version} version of the TF resource
   webUrlLex: null
-
-  # only used by `text-fabric-zip` when collecting data into zip files
-  # as attachments to a GitHub release.
-  # If left to `None`, will be configured to use the main repo and the modules.
-  # It will then also fetch the graphics.
-  #
-  # You can specify the main repo, modules, and related data:
-  #
-  # zip=["repo"]
-  # Only the main module.
-  #
-  # zip=["repo", "mod1", "mod2"]
-  # if org and relative for the modules are the same as for are the main repo)
-  #
-  # in general it should be:
-  #
-  # zip=["repo"] + [("org1", "mod1", "relative1"), ("org2", "mod2", "relative2")]
-  #
-  # When the value is `None`, this value is used
-  # where all modules mentioned in the moduleSpecs will be filled in.
-  #
-  # You can also use this scheme to include other data from the repository.
-  # Note that graphics data will be packaged automatically.
   zip: null
-
-# Here follow display parameters per type
-# If some types do not need configuration, you may leave them out.
-# Do not specify values if the defaults work for you.
-#
-# NB: zero configuration might already work for your corpus!
-# typeDisplay:{}
 typeDisplay:
-
-  # The name "piece" is a node type of an example dataset.
-  # If you configure your own dataset, use the node types of your dataset instead.
   piece:
-
-    # If present and True: this type acts as the base type:
-    # plain: if the node needs to be highlighted, it gets a coloured background.
-    # plain: Nodes of other types receive their highlights
-    # as coloured borders around their boxes.
-    # pretty: Children of these nodes are not expanded further,
-    # but displayed in plain mode (with highlighting)
-    #
-    # The default is:
-    # True for the slot type.
     base: false
-
-    # plain and pretty: which type of children to be included in the display.
-    # The value should be a node type or a set of node types:
-    #
-    # children: piece
-    #
-    # children:
-    #   - piece
-    #   - slot
-    #
-    # The default is:
-    # for section and structure types: the type that comes immediately below it;
-    # where the lowest section/structure type
-    # have the biggest other type as child type or, if there is no such one:
-    # the slotType.
-    # The smallest other type has the slot type as child type.
-    # Lexeme types do not have children.
+    boundary: false
     children: slot
-
-    # Some types correspond to long sections. Such big types will not be expanded
-    # in pretty displays. If you also want to generate abrreviated plain displays
-    # you can say childrenPlain: false
-    #
-    # The default is true
     childrenPlain: true
-
-    # If present and true: this type is the default condense type.
-    # pretty: when displaying tuples of nodes,
-    # they will be chunked in displays of nodes of this type.
-    #
-    # The default is:
-    # True for the lowest section type, if there are section types in otext.tf
-    # If there is no such section, we pick a medium-sized type.
-    # If there are no such types, we pick the slot type, but this is pathological.
     condense: true
-
-    # pretty displays: which features to display as name=value
-    #
-    # You can also lookup feature values for upper nodes, e.g.
-    # `{lex:gloss}`
-    # which will look for a `lex` node above the current node
-    # and retrieve its `gloss` value.
-    #
-    # The default = ""
     features: feat3 feat4
-
-    # pretty displays: which features to display by value only
-    # (the feature name is not mentioned)
-    # Things like `{lex:gloss}` are allowed.
-    #
-    # The default = ""
     featuresBare: feat1 feat2
-
-    # pretty: whether the container should arrange its subdisplays
-    # as a column or as a row.
-    # Values: hor, ver
-    # The default is:
-    # ver if level is 3 (typically section types), except for the verselike types
-    # ver if level is 0 (typically slot types and lexeme types)
-    # hor if level is 1 or 2 (typically linguistic types at sentence level) and
-    # for the verselike types
     flow: hor
-
-    # If present and True, then there is additional graphics available for nodes of this
-    # type.
-    # The app needs to define a function
-    #
-    # getGraphics(nodee, nodeType, isOuter) => HTML code for sourcing the graphics
-    #
-    # See uruk.
     graphics: null
-
-    # pretty: the visual style of the container box of this node, values 0, 1, 2, 3.
-    # The bigger the number, the heavier the borders of the boxes.
-    # The default is:
-    # 3 for types known as section or structure types, including the verselike types
-    # 0 for the slot type and types known as lexeme types
-    # 1 or 2 for the remaining types:
-    # the bigger types are 2
-    # the smaller types are 1
     level: 1
-
-    # If present, indicates that this is a lexeme type,
-    # and it points to the type of things that are occurrences of lexemes.
-    # Lexemes are displayed with an indication of their first and last occurrence.
-    #
-    # There is no default.
     lexOcc: slot
-
-    # If present, it should be the name of a feature that holds source line numbers.
     lineNumber: null
-
-    # pretty: whether the children should be stretched
-    # in the direction perpendicular to their stacking.
-    # The default is:
-    # True if the children form a row (then each child is stretched vertically)
-    # False if the children form a column
-    # (then each child is NOT stretched horizontally)
-    # For some types in uruk it is needed to deviate from the default.
     stretch: true
-    
-    # plain and pretty: whether nodes of this type are the chunks of another type.
-    # Typically, the other type has gaps, and this type consists of continuous chunks.
-    # See for example the bhsa, where phrase_atoms are chunks of phrases.
-    #
-    # Nodes that are chunks have a reduced appearance in pretty displays, 
-    # unless you pass the display option showChunks=True
-    chunkOf: null
-
-    # node information for plain and pretty displays
-    #
-    # template is for plain displays
-    #
-    # label is for pretty displays
-    #
-    # You can have features filled in by mentioning them by name in the template, e.g.
-    # `{name1} - {name2}`
-    # If you specify `True`, the node information will be the result of:
-    # section and structure types nodes: a heading
-    # other nodes: plain text of the node
-    #
-    # The default is:
-    # True for the slot type
-    # True for the section and structure types
-    # "" for all other types
+    hidden: false
     label: '{title}'
     template: '{title}'
-    
-    # styling for plain and pretty displays
-    #
-    # The label or template may be a special style to format it with.
-    # If you pass one of normal, source, trans, phono, orig: 
-    # an appropriate css style will be chosen.
-    # If you pass anything else: that will be an extra css class passed to the output.
     style: None
-
-    # Sometimes you do not want to display straight feature values, but transformed ones.
-    # For each node type and each feature you can specfiy a transform function f:
-    # E.g.
-    # 
-    # case:
-    #   transform:
-    #     type: ctype
-    #
-    # The feature `type`, when computed for a `case` node, will yield a value
-    # which is transformed by a function to a new value. 
-    # In your app code you have to implement:
-    #
-    #   transform_f(app, origValue) => newValue
-    #
     transform: {}
-
-    # whether this type should be formatted as a verse
-    #
-    # The default is:
-    # True for the lowest section type, if there are section types in otext.tf
-    # But more types can be declared as verselike, e.g. `half_verse` in the bhsa
     verselike: false
-
-    # pretty: whether the children may be wrapped.
-    # The default is:
-    # True if the children form a row, such rows may be wrapped
-    # False if the children form a column,
-    # such columns may not be wrapped (into several columns)
-    # For some types in uruk it is needed to deviate from the default.
     wrap: true
-
-  # The name "sign" is the slot type of an example dataset.
-  # If you configure your own dataset, use the slot types of your dataset instead.
-  # All parameters work for all types, but some are more meaningful than others.
   sign:
     features: feat3
     featuresBare: feat1
-
-# code for triggering special fonts, e.g.
-# akk: akkadian
-# hbo: hebrew
-# syc: syriac
-# ara: arabic
-# grc: greek
-# cld: neo aramaic
 writing: ''
