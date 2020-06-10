@@ -1,4 +1,4 @@
-apiVersion: 2
+apiVersion: 3
 dataDisplay:
   browseContentPretty: false
   browseNavLevel: 2
@@ -24,7 +24,7 @@ interfaceDefaults:
   lineNumbers: null
   prettyTypes: true
   queryFeatures: true
-  showHidden: null
+  showHidden: false
   standardFeatures: true
   showGraphics: null
   withNodes: false
@@ -49,8 +49,6 @@ typeDisplay:
   piece:
     base: false
     boundary: false
-    children: slot
-    childrenPlain: true
     condense: true
     features: feat3 feat4
     featuresBare: feat1 feat2
